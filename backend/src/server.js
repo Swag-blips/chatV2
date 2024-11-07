@@ -6,12 +6,15 @@ import adminRoutes from "./routes/admin.route.js";
 import songsRoutes from "./routes/songs.route.js";
 import albumRoutes from "./routes/album.route.js";
 import statRoutes from "./routes/stat.route.js";
+import { clerkMiddleware } from "@clerk/express";
 import connectMongo from "./db/connectMongo.js";
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT;
 app.use(express.json());
+
+app.use(clerkMiddleware());
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
