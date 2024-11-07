@@ -6,6 +6,7 @@ import adminRoutes from "./routes/admin.route.js";
 import songsRoutes from "./routes/songs.route.js";
 import albumRoutes from "./routes/album.route.js";
 import statRoutes from "./routes/stat.route.js";
+import connectMongo from "./db/connectMongo.js";
 dotenv.config();
 
 const app = express();
@@ -20,4 +21,5 @@ app.use("/api/stats", statRoutes);
 
 app.listen(PORT, () => {
   console.log("Server is running on port 5000");
+  connectMongo();
 });
