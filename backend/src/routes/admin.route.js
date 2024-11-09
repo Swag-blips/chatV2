@@ -1,6 +1,7 @@
 import Router from "express";
 import { protectRoute, requiredAdmin } from "../middleware/auth.middleware.js";
 import {
+  checkAdmin,
   createAlbum,
   createSong,
   deleteAlbum,
@@ -8,10 +9,12 @@ import {
 } from "../controllers/admin.controller.js";
 
 const router = Router();
-router.length("/check", protectRoute, requiredAdmin, checkAdmin);
-router.post("/songs", protectRoute, requiredAdmin, createSong);
-router.delete("/songs/:id", protectRoute, requiredAdmin, deleteSong);
-router.post("/albums", protectRoute, requiredAdmin, createAlbum);
-router.delete("/albums/:id", protectRoute, requiredAdmin, deleteAlbum);
+
+router.use(protectRoute, requiredAdmin);
+router.get("/check", checkAdmin);
+router.post("/songs", createSong);
+router.delete("/songs/:id", deleteSong);
+router.post("/albums", createAlbum);
+router.delete("/albums/:id", deleteAlbum);
 
 export default router;
