@@ -1,12 +1,10 @@
 import Router from "express";
+import { protectRoute } from "../middleware/auth.middleware.js";
+import { getAllUsers } from "../controllers/user.controller.js";
 
 const router = Router();
 
-router.get("/", (req, res) => {
-  res.send("User route with get method");
-});
-
-router.post("/");
+router.get("/", protectRoute, getAllUsers);
 
 router.get("/");
 router.get("/");
