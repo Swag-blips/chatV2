@@ -1,13 +1,19 @@
-import PlaylistSkeleton from "@/components/skeletons/PlayListSkeleton";
+import PlaylistSkeleton from "@/components/skeletons/PlaylistSkeleton";
 import { buttonVariants } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
+import { useMusicStore } from "@/stores/useMusicStore";
 import { SignedIn } from "@clerk/clerk-react";
 import { HomeIcon, Library, MessageCircle } from "lucide-react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const LeftSidebar = () => {
-  const isLoading = true;
+  const { songs, albums, fetchAlbums, isLoading } = useMusicStore();
+
+  useEffect(() => {
+    fetchAlbums();
+  }, [fetchAlbums]);
   return (
     <div className="h-full flex flex-col gap-2">
       <div className="rounded-lg bg-zinc-900 p-4">

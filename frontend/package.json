@@ -22,7 +22,8 @@
     "react-resizable-panels": "^2.1.6",
     "react-router-dom": "^6.28.0",
     "tailwind-merge": "^2.5.4",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zustand": "^5.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
