@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useMusicStore } from "@/stores/useMusicStore";
-import { Play } from "lucide-react";
+import { Clock, Play } from "lucide-react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
@@ -51,6 +51,54 @@ export default function AlbumPage() {
               >
                 <Play className="h-7 w-7 text-black" />
               </Button>
+            </div>
+
+            <div className="bg-black/20 backdrop-blur-sm">
+              <div className="grid grid-cols-[16px_4fr_2fr_1fr] gap-4 px-10 py-2 text-sm text-zinc-400 border-b border-white/5">
+                <div>#</div>
+                <div>Title</div>
+                <div>Released Date</div>
+                <div>
+                  <Clock className="h-4 w-4" />
+                </div>
+              </div>
+
+              <div className="px-6">
+                <div className="space-y-2 py-4">
+                  {currentAlbum?.songs.map((song, index) => (
+                    <div
+                      key={song._id}
+                      className={`grid grid-cols-[16px_4fr_2fr_1fr] gap-4 px-4 py-2 text-sm 
+                      text-zinc-400 hover:bg-white/5 rounded-md group cursor-pointer
+                      `}
+                    >
+                      <div className="flex items-center justify-center">
+                        <span className="group-hover:hidden">{index + 1}</span>
+                        <Play className="h-4 w-4 hidden group-hover:block" />
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <img
+                          src={song.imageUrl}
+                          className="size-10"
+                          alt={song.title}
+                        />
+
+                        <div>
+                          <div className={`font-medium text-white`}>
+                            {song.title}
+                          </div>
+                          <div>{song.artist}</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center">
+                        {song.createdAt.split("T")[0]}
+                      </div>
+                      <div className="flex items-center">{song.duration}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
