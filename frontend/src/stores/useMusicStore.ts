@@ -1,21 +1,10 @@
 import { axiosInstance } from "@/lib/axios";
+import { Album, Song } from "@/types";
 import { create } from "zustand";
 
-interface Song {
-  id: string;
-}
-interface Album {
-  artist: string;
-  createdAt: string;
-  imageUrl: string;
-  releaseYear: number;
-  songs: Array<Song>;
-  title: string;
-  _id: string;
-}
 interface MusicStore {
-  albums: Array<Album>;
-  songs?: [];
+  albums: Album[];
+  songs?: Song[];
   isLoading: boolean;
   error: string | null;
   fetchAlbums: () => Promise<void>;
