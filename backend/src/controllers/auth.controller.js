@@ -2,7 +2,6 @@ import { generateToken } from "../lib/utils.js";
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 
-
 export const signup = async (req, res) => {
   const { fullName, email, password } = req.body;
   try {
@@ -38,10 +37,50 @@ export const signup = async (req, res) => {
       return;
     }
   } catch (error) {
-    console.error(error.message);
+    console.error(`error from the signup route ${error.message} `);
     res.status(500).json({ error: "Internal server error" });
   }
 };
 
+export const login = async (req, res) => {
+  const { email, password } = req.body;
 
-expo
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ error: "Invalid credentials" });
+    }
+
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordCorrect) {
+      return res.status(400).json({ error: "Invalid credentials" });
+    }
+
+    generateToken(user._id, res);
+    res.status(200).json({
+      id: user._id,
+      fullName: user.fullName,
+      email: user.email,
+      profilPic: user.profilePic,
+    });
+    return;
+  } catch (error) {
+    console.error(`error in login controller ${error.message}`);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const logout = (req, res) => {
+  try {
+    res.cookie("jwt", "", { maxAge: 0 });
+    return res.status(200).json({ message: "logged out successfully" });
+  } catch (error) {
+    console.log(`error in logout controller ${error.message}`);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const updateProfile = async (req, res) => {
+  
+};
