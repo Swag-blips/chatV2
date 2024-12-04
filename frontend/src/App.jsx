@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar";
 import { Loader } from "lucide-react";
 import useAuthStore from "./store/useAuthStore";
 import { useEffect } from "react";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const { authUser, isCheckingAuth, checkAuth } = useAuthStore();
@@ -46,6 +47,7 @@ function App() {
           element={authUser ? <Settings /> : <Navigate to="/login" />}
         />
       </Routes>
+      <Toaster />
     </div>
   );
 }
