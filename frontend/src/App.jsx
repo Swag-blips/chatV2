@@ -6,11 +6,11 @@ import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import Navbar from "./components/Navbar";
 import { Loader } from "lucide-react";
-import createAuthStore from "./store/useAuthStore";
+import useAuthStore from "./store/useAuthStore";
 import { useEffect } from "react";
 
 function App() {
-  const { authUser, isCheckingAuth, checkAuth } = createAuthStore();
+  const { authUser, isCheckingAuth, checkAuth } = useAuthStore();
 
   useEffect(() => {
     checkAuth();
