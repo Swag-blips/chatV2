@@ -9,10 +9,11 @@ import { Loader } from "lucide-react";
 import useAuthStore from "./store/useAuthStore";
 import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
+import { useThemeStore } from "./store/useThemeStore";
 
 function App() {
   const { authUser, isCheckingAuth, checkAuth } = useAuthStore();
-
+  const { theme } = useThemeStore();
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
@@ -25,7 +26,7 @@ function App() {
     );
   }
   return (
-    <div data-theme="retro">
+    <div data-theme={theme}>
       <Navbar />
 
       <Routes>
