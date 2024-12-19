@@ -109,7 +109,7 @@ export const updateProfile = async (req, res) => {
 
 export const checkAuth = async (req, res) => {
   try {
-    res.status(200).json(req.user);
+    return res.status(200).json(req.user);
   } catch (error) {
     console.error(`an error occured in check auth controller ${error.message}`);
     res.status(500).json({ error: "Internal server error" });

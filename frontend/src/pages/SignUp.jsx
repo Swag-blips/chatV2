@@ -22,13 +22,13 @@ const SignUp = () => {
 
   const { signup, isSigningUp } = useAuthStore();
 
-  const validateForm = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (validateForm()) {
       signup(formData);
     }
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const validateForm = () => {
     if (!formData.fullName.trim()) return toast.error("Full name is required");
     if (!formData.email.trim()) return toast.error("Email is required");
     if (!/\S+@\S+\.\S+/.test(formData.email))
@@ -132,6 +132,7 @@ const SignUp = () => {
 
             <button
               type="submit"
+              onClick={handleSubmit}
               className="btn btn-primary w-full"
               disabled={isSigningUp}
             >
