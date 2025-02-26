@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import useChatStore from "../store/useChatStore";
 import ChatHeader from "./ChatHeader";
 import MessageInput from "./MessageInput";
@@ -16,6 +16,8 @@ const ChatContainer = () => {
     selectedUser,
   } = useChatStore();
 
+  const messageEndRef = useRef();
+
   const { authUser } = useAuthStore();
   useEffect(() => {
     getMessages(selectedUser._id);
@@ -29,6 +31,12 @@ const ChatContainer = () => {
     subscribeToMessages,
     unSubscribeFromMessages,
   ]);
+
+  useEffect(() => {
+    if (messageEndRef.current && messages) {
+      messageEndRef.current.scrollIntoView({ behaviour: "smooth" });
+    }
+  }, [messages]);
 
   if (isMessagesLoading) {
     return (
@@ -46,6 +54,7 @@ const ChatContainer = () => {
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map((message) => (
           <div
+            ref={messageEndRef}
             key={message._id}
             className={`chat ${
               message.senderId === authUser._id ? "chat-end" : "chat-start"
