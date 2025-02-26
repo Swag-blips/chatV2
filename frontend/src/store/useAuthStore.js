@@ -69,12 +69,15 @@ const useAuthStore = create((set, get) => ({
 
   connectSocket: () => {
     const { authUser } = get();
+
+    console.log(authUser);
     if (!authUser || get().socket?.connected) return;
     const socket = io(BASE_URL, {
       query: {
-        userId: authUser._id,
+        userId: authUser.id,
       },
     });
+
     socket.connect();
     set({ socket: socket });
 
@@ -83,11 +86,12 @@ const useAuthStore = create((set, get) => ({
     });
   },
   disconnectSocket: () => {
-    if (get().socket?.connected) {
-      get().socket.disconnect();
+    const { socket } = get();
+    if (socket) {
+      socket.disconnect();
+      set({ socket: null });
     }
   },
-
   updateProfile: async (data) => {
     set({ isUpdatingProfile: true });
     try {
