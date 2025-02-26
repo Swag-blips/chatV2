@@ -70,10 +70,23 @@ const useAuthStore = create((set, get) => ({
   connectSocket: () => {
     const { authUser } = get();
     if (!authUser || get().socket?.connected) return;
-    const socket = io(BASE_URL);
+    const socket = io(BASE_URL, {
+      query: {
+        userId: authUser._id,
+      },
+    });
     socket.connect();
+    set({ socket: socket });
+
+    socket.on("getOnlineUsers", (users) => {
+      set({ onlineUsers: users });
+    });
   },
-  disconnectSocket: () => {},
+  disconnectSocket: () => {
+    if (get().socket?.connected) {
+      get().socket.disconnect();
+    }
+  },
 
   updateProfile: async (data) => {
     set({ isUpdatingProfile: true });
